@@ -53,6 +53,9 @@ func _ready():
 	#	return
 	if wait:
 		yield(self, "end_wait")
+	# Group build (not from the official branches): don't offer to "update" back to them.
+	if "-fix" in Global.VERSION:
+		return
 		
 	add_bat_file()
 	
