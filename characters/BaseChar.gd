@@ -2489,7 +2489,7 @@ func consume_feint():
 
 func process_extra(extra):
 	if "opponent" in extra:
-		if (get_game() != null):
+		if (get_game() != null) and get_game().players.has(extra.opponent):
 			opponent = get_game().players[extra.opponent]
 	if "DI" in extra:
 		if di_enabled:

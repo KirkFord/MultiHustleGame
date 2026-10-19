@@ -1001,7 +1001,9 @@ func _on_submit_pressed():
 	if attempting_lock_in:
 		return 
 	attempting_lock_in = true
-	while not can_lock_in:
+	# Online, a lock-in during the previous turn's simulation would be wiped when this
+	# turn opens (while peers keep it), deadlocking the turn. Wait for the turn to open.
+	while not can_lock_in or (Network.multiplayer_active and not Network.turn_open):
 		yield (get_tree(), "idle_frame")
 	attempting_lock_in = false
 	var data = null
