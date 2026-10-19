@@ -353,8 +353,7 @@ func copy_to(game):
 								for index in old_hitboxes.size():
 									if old_hit == old_hitboxes[index]:
 										new_hitboxes[index] = new_hit
-			else:
-				game.objs_map[str(game.objs_map.size() + 1)] = null
+
 	game.camera.limit_left = camera.limit_left
 	game.camera.limit_right = camera.limit_right
 	
@@ -499,6 +498,8 @@ func on_global_hitlag(amount):
 
 func forfeit(id):
 	set_vanilla_game_started(true)
+	if !is_instance_valid(players.get(id)):
+		return
 	players[id].forfeit()
 	hooks.forfeit(id)
 

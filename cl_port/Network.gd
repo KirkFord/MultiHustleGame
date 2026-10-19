@@ -36,7 +36,7 @@ var steam_isHost = false
 
 func _ready():
 	._ready()
-	connect("multiplayer_stopped", self, "on_mh_stop")
+	connect("multiplayer_stopped", self, "on_stop_mh")
 
 remotesync func register_player(new_player_name, id, mods, isSteam = false):
 	# failsafe in case you connect to a non-modded player, it'll show up as having no mods
@@ -329,6 +329,8 @@ remote func opponent_sync_check_unlock():
 	rpc_("mh_opponent_sync_unlock", player_id, "remote")
 
 remote func mh_opponent_sync_unlock(id):
+	if !is_instance_valid(game):
+		return
 	if !lock_sync_unlocks:
 		Network.log("Opponent sync unlocked, ID: " + str(id))
 		sync_unlocks[id] = true
